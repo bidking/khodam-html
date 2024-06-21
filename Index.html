@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Khodam Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('can.jpg'); /* Set your background image here */
+            background-size: cover;
+            background-position: center;
+            filter: brightness(15%); /* Adjust the brightness to make it darker */
+            z-index: -1;
+        }
+        .notification {
+            background-color: rgba(255, 237, 0, 0.41);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .notification a {
+            color: #00f;
+            text-decoration: underline;
+        }
+       .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent background */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.13);
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            z-index: 1;
+        }
+        h1,p {
+            margin-bottom: 10px;
+            color: white;
+        }
+        input[type="text"] {
+          width:100%;
+            background-color: transparent;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border: 1px solid black;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-left: -10px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: white;
+        }
+        .extra-links {
+            margin-top: 20px;
+        }
+        .extra-links a {
+            color: #ff69b4;
+            text-decoration: none;
+        }
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+        .copyright {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 800;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification">
+        ini hanya sebuah candaan semata,jangan
+        terlalu di anggap serius ya oll
+        <a href="https://www.instagram.com/sttaaaaaaaaaaa?igsh=MXR0bWhqZGpvejRsYQ==" target="_blank">klik untuk melihat keindahan</a>
+    </div>
+    <div class="container">
+        <h1>Cek Khodam</h1>
+        <p>Cek khodam yang ada di dalam diri kamu</p>
+        <form id="khodamForm">
+            <input type="text" id="nama" placeholder="Tulis nama kamu di sini" required>
+            <button type="submit">CHECK</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+    <div class="copyright">
+        create by STTAAAAAA
+    </div>
+    <script>
+        // Daftar khodam yang tersedia
+      // Daftar khodam yang tersedia
+const khodamList = [
+    "Martabak Cokelat",
+    "Naga Sakti",
+    "Ratu Pantai Selatan",
+    "Harimau Putih",
+    "Raja Jin",
+    "Dewi Bulan",
+    "Penjaga Hutan",
+    "Singa Emas",
+    "Banteng Sakti",
+    "Elang Perkasa",
+    "Laba-laba Sunda",
+    "Buaya Hitam",
+    "Katak Sigma",
+    "Skibidi Sigma",
+    "Ikan Lohan Tidak Gyat",
+    "Burung Puyuh Warna Bjir",
+    "Monyet Hutan",
+    "Gajah Ngawi",
+    "Kursi Mewing",
+    "Balon Ku Sigma",
+    "Di Hina Tetap Sigma",
+    "Kue Keju",
+    "Mobil Bekas Toyota Gyat",
+    "Rehan Toyota",
+    "Ikbal Hotwil",
+    "Kuda Pake Sendal",
+    "Sendal",
+    "Jaket Bapak",
+    "Kambing Hitam",
+    "Pintu Gerbang",
+    "Kayu Jati",
+    "Jati Diri",
+    "Ayam Tidak Punya KTP",
+    "Dino Sok Inggris",
+    "Bibir Jontor Badag",
+    "Teh Sari Wangi",
+    "Indomi Kecap Asin",
+    "Burung Elang Dari Jawa",
+    "Tidak Ada/Kosong!",
+    "Nokia Bapak",
+    "Telur Gulung",
+    "Sayur Asem Kecap Manis",
+    "Baju Terbang",
+    "Sendal Jepit",
+    "Nasi Padang",
+    "Pizza Mewah",
+    "Jus Alpukat",
+    "Sate Ayam",
+    "Gado-Gado",
+    "Kambing Guling",
+    "Tahu Bulat",
+    "Lontong Balap",
+    "Soto Ayam",
+    "Bakso Gepeng",
+    "Cilok Kenyal",
+    "Mie Ayam Lezat",
+    "Es Cendol Manis",
+    "Kopi Hitam Mantap",
+    "Brownies Lumer",
+    "Kerak Telor",
+    "Tempe Mendoan",
+    "Jajanan Pasar",
+    "Pecel Lele",
+    "Ayam Geprek",
+    "Roti Bakar",
+    "Pisang Goreng",
+    "Bubur Ayam",
+    "Nasi Goreng Spesial",
+    "Sop Buntut",
+    "Gule Kambing",
+    "Rawon Hitam",
+    "Ikan Bakar",
+    "Sate Kambing",
+    "Kue Cubit",
+    "Cakwe",
+    "Tahu Gejrot",
+    "Kacang Polong",
+    "Sayur Bayam",
+    "Sambal Terasi",
+    "Es Dawet",
+    "Teh Tarik",
+    "Es Teler",
+    "Kerupuk Kulit",
+    "Rengginang",
+    "Emping Melinjo",
+    "Mie Goreng",
+    "Risoles",
+    "Lumpia Semarang",
+    "Pempek Palembang",
+    "Asinan Betawi",
+    "Lemper Ayam",
+    "Bika Ambon",
+    "Klepon",
+    "Kue Lumpur",
+    "Putu Ayu",
+    "Onde-Onde",
+    "Pukis",
+    "Serabi",
+    "Martabak Telur",
+    "Sempol Ayam",
+    "Bubur Ketan Hitam",
+    "Kai Cenat",
+    "Ibu Kai Cenat",
+    "Bapak Kai Cenat",
+    "Adek Kai Cenat",
+    "Kakak Kai Cenat",
+    "Nenek Kai Cenat",
+    "Kakek Kai Cenat",
+    "Bibi Kai Cenat",
+    "Paman Kai Cenat",
+    "Istri Kai Cenat",
+    "Keponakan Kai Cenat",
+    "Bapak Nya Istri Kai Cenat",
+    "Istri nya Bapak nya Istri Kai Cenat",
+    "Es Dawet Ketan Hitam Pekat Oli Bekas",
+    "Kai Cenat Mode Sigma",
+    "Bocil Mewing",
+    "[Rare,Misterius,Cool,Sigma,Mewing,Made in ohio] Akbar Motor Mio Gas Elpiji Wibu Sejati Kasur Bekas Motor Supra Blukutuk-Blukutuk",
+    "Kapten Bajak Laut Ngawi",
+    "Mio Mirza",
+    "Kak Gem Mode Mewing",
+    "Kak Gem",
+    "Uni Bakwan",
+    "Sambal Goreng Kecap Hitam",
+    "Kamu Bukan User Khodam!",
+    "Kosong",
+    "Ambatron Type 555 - y 9 UZ",
+    "Ambatukam Mewing",
+    "Mas Rusdi Tidak G4Y",
+    "Suki Liar",
+    "Suki Type G4",
+    "The World",
+    "Star Platinum",
+    "Gajah"
+];
+
+// Fungsi untuk memilih khodam secara acak
+function pilihKhodam(event) {
+    event.preventDefault();
+    const nama = document.getElementById("nama").value;
+    const resultDiv = document.getElementById("result");
+
+    // Menghapus hasil sebelumnya
+    resultDiv.textContent = "";
+
+    // Menampilkan loading message
+    resultDiv.textContent = "Memilih khodam untuk Anda...";
+
+    // Menunda pemilihan khodam selama 7 detik
+    setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * khodamList.length);
+        const khodam = khodamList[randomIndex];
+        resultDiv.textContent = `nama anda adalah ${nama} dan khodam anda adalah ${khodam}`;
+    }, 2000); // 7000 milidetik = 7 detik
+}
+
+// Menambahkan event listener ke form
+document.getElementById("khodamForm").addEventListener("submit", pilihKhodam);
+
+    </script>
+</body>
+</html>
